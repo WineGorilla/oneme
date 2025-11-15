@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>加载模型中...</title>
+  <style>
+    body { display: flex; justify-content: center; align-items: center; height: 100vh; background: #fafafa; font-family: sans-serif; }
+    h1 { font-size: 22px; color: #444; }
+  </style>
+</head>
+<body>
+  <h1>🧠 正在加载 AI 模型，请稍候...</h1>
+</body>
+</html>
+<script>
+async function pollStatus() {
+  const status = await window.api.getStatus();
+  document.getElementById("msg").innerText = status.stage;
+  if (!status.loading) {
+    window.location.href = "index.html";
+  } else {
+    setTimeout(pollStatus, 2000);
+  }
+}
+pollStatus();
+</script>

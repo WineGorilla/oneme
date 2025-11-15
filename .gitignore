@@ -1,0 +1,7 @@
+oneme/
+node_modules/
+__pycache__/
+backend/models/
+backend/ollama/
+.DS_Store
+.wav
