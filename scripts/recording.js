@@ -1,27 +1,23 @@
-<!DOCTYPE html>
-<html lang="zh">
-<head>
-  <meta charset="UTF-8">
-  <title>Oneme AI</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <img id="main-img" src="assets/test.png">
+const recImg = document.getElementById("main-img");
 
-  <!-- <script>
+// 图片路径
+const normalRecImg = "assets/test.png";
+const recordingImg = "assets/Figure_1.png";
 
 let isRecording = false;
 
 document.addEventListener("keydown", async (e) => {
   if (e.code === "Backquote" && !isRecording) {
     isRecording = true;
+
+    // 切换图片为录音状态
+    recImg.src = recordingImg;
+
     await fetch("http://127.0.0.1:5005/start_record", {
       method: "POST"
     });
   }
 });
-
-
 
 document.addEventListener("keyup", async (e) => {
   if (e.code === "Backquote" && isRecording) {
@@ -30,22 +26,16 @@ document.addEventListener("keyup", async (e) => {
     const res = await fetch("http://127.0.0.1:5005/stop_record", {
       method: "POST"
     });
-
     const data = await res.json();
-    // document.getElementById('status').innerText = "完成!";
-    // document.getElementById('input-text').innerText = data.input;
-    // document.getElementById('reply-text').innerText = data.reply;
 
-    // 播放音频（最新版本）
+    // 播放返回音频
     const audioRes = await fetch(data.audio_url);
     const audioBlob = await audioRes.blob();
     const audioURL = URL.createObjectURL(audioBlob);
     const audio = new Audio(audioURL);
     audio.play();
+
+    // 恢复原图
+    recImg.src = normalRecImg;
   }
 });
-</script> -->
-<script src="scripts/recording.js"></script>
-<script src="scripts/dragging.js"></script>
-</body>
-</html>

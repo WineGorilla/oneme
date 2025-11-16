@@ -16,6 +16,10 @@ function createWindow(){
   })
   win.loadFile("loading.html");
 
+  win.on("move",()=>{
+    win.webContents.send("window-moving");
+  })
+
   win.on("closed",()=>{
     if (pythonProcess){
       pythonProcess.kill("SIGKILL"); //杀死整个进程
