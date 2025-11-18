@@ -1,8 +1,8 @@
 const recImg = document.getElementById("main-img");
 
 // 图片路径
-const normalRecImg = "assets/test.png";
-const recordingImg = "assets/Figure_1.png";
+const normalRecImg = "assets/main.GIF";
+const recordingImg = "assets/listen.GIF";
 
 let isRecording = false;
 

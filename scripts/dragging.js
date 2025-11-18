@@ -1,7 +1,7 @@
 //Electron默认对资源使用 index.html 的相对路径
 const img = document.getElementById("main-img");
-const normalImg = "assets/test.png";   // 松开时的图片
-const draggingImg = "assets/test2.png";   // 拖动时的图片
+const normalImg = "assets/main.GIF";   // 松开时的图片
+const draggingImg = "assets/drag.GIF";   // 拖动时的图片
 
 let isDragging = false;
 let dragTimer = null;

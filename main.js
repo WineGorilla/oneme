@@ -9,6 +9,11 @@ function createWindow(){
   win = new BrowserWindow({
     width:500,
     height:500,
+    transparent: true,
+    frame:false,
+    movable: true,         // 允许移动
+    alwaysOnTop: true,
+    hasShadow: false,
     webPreferences:{
       preload:path.join(__dirname,'preload.js'),
       contextIsolation:true,

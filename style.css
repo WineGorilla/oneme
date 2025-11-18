@@ -4,7 +4,6 @@ body {
   display: flex;
   justify-content: center;   /* 水平居中 */
   align-items: center;       /* 垂直居中 */
-  background: #ffffff;
   font-family: Arial, sans-serif;
 }
 
@@ -12,4 +11,5 @@ img {
   max-width: 80%;
   height: auto;
   border-radius: 8px;
+  -webkit-app-region: drag;  /* 拖动窗口的关键 */
 }
