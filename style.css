@@ -11,5 +11,6 @@ img {
   max-width: 80%;
   height: auto;
   border-radius: 8px;
-  -webkit-app-region: drag;  /* 拖动窗口的关键 */
+  background: rgba(255,255,255,0.001);
+  /* -webkit-app-region: drag;  拖动窗口的关键 */
 }

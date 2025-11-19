@@ -1,24 +1,99 @@
-//Electron默认对资源使用 index.html 的相对路径
-const img = document.getElementById("main-img");
-const normalImg = "assets/main.GIF";   // 松开时的图片
-const draggingImg = "assets/drag.GIF";   // 拖动时的图片
+(() => {
 
-let isDragging = false;
-let dragTimer = null;
+    const img = document.getElementById("main-img");
+    img.addEventListener("dragstart", (e) => e.preventDefault());
 
-// 每当窗口移动都会触发
-window.electronAPI.onWindowMoving(() => {
+    const normalImg = "assets/main.GIF";
+    const longPressImg = "assets/1.png";  // 长按成立但没动的图
+    const draggingImg = "assets/drag.GIF";        // 长按成立后移动的图
 
-  // === 开始拖动 ===
-  if (!isDragging) {
-    isDragging = true;
-    img.src = draggingImg;    // 切换为拖动图片
-  }
+    const LONG_PRESS_TIME = 200;    // 长按判定时间
+    const MOVE_THRESHOLD = 5;       // 移动判定阈值
 
-  // === 重置计时器（判断是否松开）===
-  clearTimeout(dragTimer);
-  dragTimer = setTimeout(() => {
-    isDragging = false;
-    img.src = normalImg;      // 恢复原图
-  }, 150);
-});
+    let isPressing = false;   
+    let isLongPressed = false;    
+    let isDragging = false;   
+    let pressTimer = null;
+
+    let startX = 0;
+    let startY = 0;
+
+    let offsetX = 0;
+    let offsetY = 0;
+
+
+    // 获取窗口坐标
+    function getWindowPos(cb) {
+        window.electronAPI.getWindowPos((x, y) => cb(x, y));
+    }
+
+
+    // 鼠标按下
+    img.addEventListener("mousedown", (e) => {
+
+        isPressing = true;
+        isLongPressed = false;
+        isDragging = false;
+
+        startX = e.screenX;
+        startY = e.screenY;
+
+        pressTimer = setTimeout(() => {
+            if (!isPressing) return;
+
+            isLongPressed = true;
+            img.src = longPressImg;   
+
+        }, LONG_PRESS_TIME);
+    });
+
+
+    // 鼠标移动
+    document.addEventListener("mousemove", (e) => {
+        if (!isPressing) return;
+
+        const dx = Math.abs(e.screenX - startX);
+        const dy = Math.abs(e.screenY - startY);
+        const distance = dx + dy;
+
+        if (!isLongPressed) return;
+
+        // 检测是否移动
+        if (distance > MOVE_THRESHOLD && !isDragging) {
+
+            isDragging = true;
+
+            getWindowPos((winX, winY) => {
+                offsetX = e.screenX - winX;
+                offsetY = e.screenY - winY;
+            });
+
+            img.src = draggingImg;
+        }
+
+        // === 拖动窗口 ===
+        if (isDragging) {
+            const x = e.screenX - offsetX;
+            const y = e.screenY - offsetY;
+            window.electronAPI.startDragAbs({ x, y });
+        }
+    });
+
+
+    // 鼠标松开
+    document.addEventListener("mouseup", () => {
+
+        isPressing = false;
+        clearTimeout(pressTimer);
+
+        if (isLongPressed || isDragging) {
+            img.src = normalImg;
+        }
+
+        isLongPressed = false;
+        isDragging = false;
+    });
+
+})();
+
+

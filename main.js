@@ -1,4 +1,4 @@
-const {app,BrowserWindow} = require('electron')
+const {app,BrowserWindow, ipcMain} = require('electron')
 const path = require('path')
 const {spawn} = require('child_process')
 
@@ -33,6 +33,30 @@ function createWindow(){
     }
   })
 }
+
+ipcMain.on("window-click",()=>{
+  win.webContents.send("image-switch");
+})
+
+ipcMain.on("start-drag", (event, { dx, dy }) => {
+  const win = BrowserWindow.fromWebContents(event.sender);
+  if (!win) return;
+
+  const [x, y] = win.getPosition();
+  win.setPosition(x + dx, y + dy);
+});
+
+ipcMain.on("start-drag-abs", (event, { x, y }) => {
+  const win = BrowserWindow.fromWebContents(event.sender);
+  win.setPosition(x, y);
+});
+
+ipcMain.on("get-window-pos", (event) => {
+  const win = BrowserWindow.fromWebContents(event.sender);
+  const [x, y] = win.getPosition();
+  event.sender.send("reply-window-pos", { x, y });
+});
+
 
 
 function startPythonBackend(){
