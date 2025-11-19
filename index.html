@@ -8,46 +8,8 @@
 <body>
   <img id="main-img" src="assets/main.GIF">
 
-  <!-- <script>
-
-let isRecording = false;
-
-document.addEventListener("keydown", async (e) => {
-  if (e.code === "Backquote" && !isRecording) {
-    isRecording = true;
-    await fetch("http://127.0.0.1:5005/start_record", {
-      method: "POST"
-    });
-  }
-});
-
-
-
-document.addEventListener("keyup", async (e) => {
-  if (e.code === "Backquote" && isRecording) {
-    isRecording = false;
-
-    const res = await fetch("http://127.0.0.1:5005/stop_record", {
-      method: "POST"
-    });
-
-    const data = await res.json();
-    // document.getElementById('status').innerText = "完成!";
-    // document.getElementById('input-text').innerText = data.input;
-    // document.getElementById('reply-text').innerText = data.reply;
-
-    // 播放音频（最新版本）
-    const audioRes = await fetch(data.audio_url);
-    const audioBlob = await audioRes.blob();
-    const audioURL = URL.createObjectURL(audioBlob);
-    const audio = new Audio(audioURL);
-    audio.play();
-  }
-});
-</script> -->
 <script src="scripts/recording.js"></script>
 <script src="scripts/dragging.js"></script>
 <script src="scripts/click.js"></script>
-
 </body>
 </html>
