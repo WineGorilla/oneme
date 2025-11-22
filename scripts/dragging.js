@@ -4,11 +4,11 @@
     img.addEventListener("dragstart", (e) => e.preventDefault());
 
     const normalImg = "assets/main.GIF";
-    const longPressImg = "assets/1.png";  // 长按成立但没动的图
+    const longPressImg = "assets/longclick.GIF";  // 长按成立但没动的图
     const draggingImg = "assets/drag.GIF";        // 长按成立后移动的图
 
-    const LONG_PRESS_TIME = 200;    // 长按判定时间
-    const MOVE_THRESHOLD = 5;       // 移动判定阈值
+    const LONG_PRESS_TIME = 100;    // 长按判定时间
+    const MOVE_THRESHOLD = 3;       // 移动判定阈值
 
     let isPressing = false;   
     let isLongPressed = false;    

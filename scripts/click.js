@@ -2,7 +2,7 @@
     const img = document.getElementById("main-img");
 
     const normalImg = "assets/main.GIF";
-    const clickImg = "assets/listen.GIF";
+    const clickImg = "assets/click.GIF";
 
     let mouseDown = false;
     let startTime = 0;
